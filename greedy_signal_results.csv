@@ -1,0 +1,17 @@
+intersection_id,morning_peakveh/h_green_light,afternoonveh/h_green_light,evening_peakveh/h_green_light,nightveh/h_green_light
+3,north,south,north,south
+8,east,east,east,east
+5,west,west,east,west
+6,north,north,north,north
+9,west,west,west,west
+10,west,west,west,west
+2,west,west,west,west
+14,north,north,north,north
+11,west,west,west,west
+15,north,north,north,north
+12,south,south,south,south
+F2,south,south,south,south
+1,north,north,north,north
+4,west,west,west,west
+13,east,east,east,east
+7,south,south,south,south

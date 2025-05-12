@@ -9,7 +9,9 @@ DATA_PATHS = {
     "bus_routes": "shared/data/Current_Bus_Routes.csv",
     "metro_lines": "shared/data/Current_Metro_Lines.csv",
     "traffic": "shared/data/Traffic_Flow_Patterns.csv",
-    "demand": "shared/data/Transportation_Demand.csv"
+    "demand": "shared/data/Transportation_Demand.csv",
+    "greedy_intersections": "shared/data/greedy_intersections.csv",
+    "locations": "shared/data/locations.csv"
 }
 
 def load_data(data_type: str):

@@ -1,0 +1,30 @@
+ID,Name,Type,X,Y
+1,Maadi,Neighborhood (Residential),31.25,29.96
+2,Nasr City,Neighborhood (Mixed),31.34,30.06
+3,Downtown Cairo,Neighborhood (Business),31.24,30.04
+4,New Cairo,Neighborhood (Residential),31.47,30.03
+5,Heliopolis,Neighborhood (Mixed),31.32,30.09
+6,Zamalek,Neighborhood (Residential),31.22,30.06
+7,6th October City,Neighborhood (Mixed),30.98,29.93
+8,Giza,Neighborhood (Mixed),31.21,29.99
+9,Mohandessin,Neighborhood (Business),31.2,30.05
+10,Dokki,Neighborhood (Mixed),31.21,30.03
+11,Shubra,Neighborhood (Residential),31.24,30.11
+12,Helwan,Neighborhood (Industrial),31.33,29.85
+13,New Administrative Capital,Neighborhood (Government),31.8,30.02
+14,Al Rehab,Neighborhood (Residential),31.49,30.06
+15,Sheikh Zayed,Neighborhood (Residential),30.94,30.01
+F1,Cairo International Airport,Facility (Airport),31.41,30.11
+F2,Ramses Railway Station,Facility (Transit Hub),31.25,30.06
+F3,Cairo University,Facility (Education),31.21,30.03
+F4,Al-Azhar University,Facility (Education),31.26,30.05
+F5,Egyptian Museum,Facility (Tourism),31.23,30.05
+F6,Cairo International Stadium,Facility (Sports),31.3,30.07
+F7,Smart Village,Facility (Business),30.97,30.07
+F8,Cairo Festival City,Facility (Commercial),31.4,30.03
+F9,Qasr El Aini Hospital,Facility (Medical),31.23,30.03
+F10,Maadi Military Hospital,Facility (Medical),31.25,29.95
+F11,October General Hospital,Facility (Medical),30.98,29.92
+F12,Sheikh Zayed Specialized Hospital,Facility (Medical),30.99,30.00
+F13,Capital International Medical Center,Facility (Medical),31.82,30.01
+

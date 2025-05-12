@@ -1,0 +1,6 @@
+intersection_id,north_traffic,south_traffic,east_traffic,west_traffic
+A1,20,15,5,10
+B3,8,30,12,20
+C5,25,18,30,22
+D2,10,12,8,7
+E4,35,15,10,5
