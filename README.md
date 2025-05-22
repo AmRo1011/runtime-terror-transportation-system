@@ -113,7 +113,7 @@ git clone https://github.com/yourusername/runtime-terror-transportation-system.g
 cd runtime-terror-transportation-system
 ```
 
-2. Create and activate a virtual environment:
+2. Create and activate a virtual environment (optional) :
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
@@ -175,13 +175,16 @@ streamlit run app.py
 ## Team
 
 **Runtime Terror Team**
-- [Team Member 1: Omnia Adel Saber ]
-- [Team Member 2: Mariam Elrafei Mohamed]
-- [Team Member 3: Abdelrahman Amr Mohamed]
-- [Team Member 4: Shams Abd Elhalim Abo Ghannam]
+- [Omnia Adel Saber](https://github.com/Omnia-adel1)
+- [Mariam Elrafei Mohamed](https://github.com/Mariam-abdelfttah)
+- [Abdelrahman Amr Mohamed](https://github.com/AmRo1011)
+- [Shams Abd Elhalim Abo Ghannam](https://github.com/shams8795)
 
 ## Acknowledgments
+Special thanks to:
 
-- CSE112 - Design and Analysis of Algorithms Course
--AIU Faculty Advisors
-- Open Source Community
+Eng. Ahmed M. Yahia – for guidance and feedback
+
+AIU Faculty – for providing a supportive learning environment
+
+Open-source community
