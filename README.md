@@ -1,7 +1,6 @@
 # Smart City Transportation System 🚦
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.24.0-orange.svg)](https://streamlit.io)
 [![NetworkX](https://img.shields.io/badge/NetworkX-2.8.4-blue.svg)](https://networkx.org)
 
