@@ -45,33 +45,41 @@ def main():
         'nightveh/h': 'Night'
     }
 
-    for to_node in traffic['To'].unique():
+    # ✅ شمل كل التقاطعات من traffic و emergency
+    all_targets = set(traffic['To'].unique())
+    all_targets.update(t for _, t, _ in emergency_set)
+
+    for to_node in all_targets:
         intersect_traffic = traffic[traffic['To'] == to_node]
-        entry_directions = {p: {} for p in periods}
+        entry_directions = {p: {'north': 0, 'south': 0, 'east': 0, 'west': 0} for p in periods}
 
         for _, row in intersect_traffic.iterrows():
             from_id, to_id = row['From'], row['To']
             direction = estimate_direction(from_id, to_id)
             for p in periods:
-                entry_directions[p][direction] = entry_directions[p].get(direction, 0) + row[p]
+                entry_directions[p][direction] += row[p]
 
         result = {"intersection_id": to_node}
         for p in periods:
             period_name = period_map[p]
-            emg_match = [estimate_direction(f, t) for f, t, per in emergency_set if t == to_node and per == period_name]
-            if emg_match:
-                result[f"{p}_green_light"] = emg_match[0]  # emergency direction
-            else:
-                # Apply greedy: direction with max traffic
-                if entry_directions[p]:
-                    result[f"{p}_green_light"] = max(entry_directions[p], key=entry_directions[p].get)
+            emergency_override = [estimate_direction(f, t) for f, t, per in emergency_set if t == to_node and per == period_name]
+            traffic_total = sum(entry_directions[p].values())
+            
+            for dir in ['north', 'south', 'east', 'west']:
+                if emergency_override and dir == emergency_override[0]:
+                    result[f"{p}_{dir}_sec"] = 60  # full time for emergency
+                elif emergency_override:
+                    result[f"{p}_{dir}_sec"] = 0
+                elif traffic_total > 0:
+                    ratio = entry_directions[p][dir] / traffic_total
+                    result[f"{p}_{dir}_sec"] = int(ratio * 60)
                 else:
-                    result[f"{p}_green_light"] = "unknown"
+                    result[f"{p}_{dir}_sec"] = 0
 
         results.append(result)
 
     pd.DataFrame(results).to_csv("greedy_signal_results.csv", index=False)
-    print("✅ Greedy Signal Timing Done. Check greedy_signal_results.csv")
+    print("✅ Greedy Signal Timing (with durations) Done. Check greedy_signal_results.csv")
 
 if __name__ == "__main__":
     main()

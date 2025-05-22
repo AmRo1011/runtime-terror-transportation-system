@@ -100,7 +100,8 @@ def schedule_metro_lines(total_trains: int) -> Dict[str, int]:
 
         # Store line information
         line_ids.append(line_id)
-        values.append(passengers)  # value is the passenger count
+        score = passengers * num_stations
+        values.append(score)
         costs.append(train_cost)
 
     # Dynamic Programming (0/1 Knapsack) implementation

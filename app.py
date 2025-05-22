@@ -12,6 +12,9 @@ from shortest_path.dijkstra import dijkstra
 from shortest_path.dijkstra_traffic import dijkstra_with_traffic
 from shortest_path.astar_emergency import astar
 
+from greedy_signals.greedy import main as run_greedy_signal_timing
+import os
+
 from mst import compute_hybrid_mst
 
 
@@ -127,6 +130,15 @@ if action == "Suggest new road network":
             max_budget=budget_value
         )
 
+    # 📌 Legend
+    st.markdown("""
+    #### 🗺️ Map Legend
+    - 🟩 **Green line** = New road (selected by MST)
+    - 🟨 **Yellow line** = Existing road used to complete connectivity
+    - ⚪ **Gray line** = Base road network
+    """)
+
+
         # عرض النتائج
     if "mst_result" in st.session_state:
         final_mst, total_cost, num_existing = st.session_state["mst_result"]
@@ -183,6 +195,14 @@ elif action == "Find best route between two locations":
     else:
         period = None
 
+        # 📌 Legend
+    st.markdown("""
+    #### 🗺️ Map Legend
+    - 🟩 **Green line** = Best route found (Dijkstra or Dijkstra with traffic)
+    - ⚪ **Gray line** = Base road network
+    """)
+
+
     if st.button("Calculate Best Route"):
         if algo_choice == "Dijkstra":
             path, cost = dijkstra(graph, start_id, end_id)
@@ -221,6 +241,8 @@ elif action == "Simulate emergency response":
     start = st.selectbox("Your Location", locations["name"])
     period = st.selectbox("Select time period for emergency simulation", ["Morning", "Afternoon", "Evening", "Night"])
 
+
+
     # تحويل الأسماء إلى ID والعكس
     name_to_id = {str(row["name"]).strip().lower(): str(row["id"]) for _, row in locations.iterrows()}
     id_to_name = {str(row["id"]): str(row["name"]).strip() for _, row in locations.iterrows()}
@@ -234,6 +256,14 @@ elif action == "Simulate emergency response":
 
     start_id = name_to_id[start.strip().lower()]
     hospitals = locations[locations["type"].str.contains("medical", case=False)]["id"].astype(str).tolist()
+
+        # 📌 Legend
+    st.markdown("""
+    #### 🗺️ Map Legend
+    - 🟥 **Red line** = Shortest emergency route (A* algorithm)
+    - ⚪ **Gray line** = Base road network
+    """)
+
 
     if st.button("Simulate Emergency Route"):
         best_path = []
@@ -297,6 +327,15 @@ elif action == "Visualize public transport scheduling":
     if "metro_plan" not in st.session_state:
         st.session_state.metro_plan = {}
 
+            # 📌 Legend
+        st.markdown("""
+        #### 🗺️ Map Legend
+        - 🔵 **Blue line** = Bus route with assigned buses
+        - 🟣 **Purple line** = Metro line with assigned trains
+        - ⚪ **Gray line** = Base road network
+        """)
+
+
     if st.button("Generate Transit Schedules"):
         st.session_state.bus_plan = schedule_buses(total_buses)
         st.session_state.metro_plan = schedule_metro_lines(total_trains)
@@ -349,12 +388,12 @@ elif action == "Visualize public transport scheduling":
                         weight=3,
                         tooltip=f"🚇 Line {line_id}: {metro_plan[line_id]} trains"
                     ).add_to(m)
-
-
 # --- 5. Traffic Signal Optimization ---
 elif action == "Reduce traffic congestion at intersections":
     st.subheader("🚦 Smart Traffic Signal Timing")
-    st.info("🚧 This will apply greedy logic to reduce congestion at key intersections.")
+    if not os.path.exists("greedy_signal_results.csv"):
+        st.warning("📊 Generating traffic signal optimization results...")
+        run_greedy_signal_timing()
 
     if st.button("Run Greedy Signal Optimization"):
         result_df = pd.read_csv("greedy_signal_results.csv")
@@ -364,33 +403,84 @@ elif action == "Reduce traffic congestion at intersections":
         result_df = st.session_state.greedy_results
         st.dataframe(result_df)
 
-        # Visualize intersections on the map
-        direction_colors = {
-            'north': 'blue',
-            'south': 'green',
-            'east': 'orange',
-            'west': 'purple',
-            'unknown': 'gray'
-        }
-        period = st.selectbox("Select time period to visualize:", [
-            "morning_peakveh/h_green_light",
-            "afternoonveh/h_green_light",
-            "evening_peakveh/h_green_light",
-            "nightveh/h_green_light"
+        period_prefix = st.selectbox("Select time period to visualize:", [
+            "morning_peakveh/h",
+            "afternoonveh/h",
+            "evening_peakveh/h",
+            "nightveh/h"
         ])
 
+        # 📌 Legend
+        st.markdown("""
+        #### 🗺️ Map Legend
+        - 🟦 **Blue** = North direction
+        - 🟩 **Green** = South direction
+        - 🟧 **Orange** = East direction
+        - 🟪 **Purple** = West direction
+        - 🔴 **Dark Red** = Intersection affected by emergency vehicle
+        - 🟢 **Green line** = Path of emergency vehicle
+        """)
+
+        # Load emergency route targets
+        try:
+            with open("shared/emergency_routes.json") as f:
+                emergency_data = json.load(f)
+            emergency_targets = {
+                e["to_id"] for e in emergency_data if e["period"].lower() == period_prefix.split("_")[0]
+            }
+        except:
+            emergency_targets = set()
+
+        # Draw intersections with direction-based or emergency color
         for _, row in result_df.iterrows():
             node = row['intersection_id']
             if node in node_coords:
-                dir_value = row.get(period, "unknown")
+                values = {
+                    "north": row.get(f"{period_prefix}_north_sec", 0),
+                    "south": row.get(f"{period_prefix}_south_sec", 0),
+                    "east": row.get(f"{period_prefix}_east_sec", 0),
+                    "west": row.get(f"{period_prefix}_west_sec", 0),
+                }
+
+                dominant_dir = max(values, key=values.get)
+                direction_colors = {
+                    "north": "blue",
+                    "south": "green",
+                    "east": "orange",
+                    "west": "purple"
+                }
+                base_color = direction_colors.get(dominant_dir, "gray")
+                color = "darkred" if node in emergency_targets else base_color
+
+                label = f"Intersection {node}\n" + " | ".join([f"{k.title()}: {v}s" for k, v in values.items()])
+                if node in emergency_targets:
+                    label += "\n(EMERGENCY)"
+
                 folium.CircleMarker(
                     location=node_coords[node],
                     radius=8,
-                    color=direction_colors.get(dir_value, "gray"),
+                    color=color,
                     fill=True,
-                    fill_opacity=0.8,
-                    tooltip=f"Intersection {node} → {dir_value.title()}"
+                    fill_opacity=0.9,
+                    tooltip=label
                 ).add_to(m)
+
+        # رسم مسار الطوارئ بلون أخضر مميز
+        try:
+            with open("shared/emergency_routes.json") as f:
+                emergency_data = json.load(f)
+            for e in emergency_data:
+                if e["period"].lower() == period_prefix.split("_")[0]:
+                    f_id, t_id = e["from_id"], e["to_id"]
+                    if f_id in node_coords and t_id in node_coords:
+                        folium.PolyLine(
+                            locations=[node_coords[f_id], node_coords[t_id]],
+                            color="green",
+                            weight=6,
+                            tooltip=f"🚑 Emergency Path: {f_id} → {t_id}"
+                        ).add_to(m)
+        except:
+            st.warning("⚠️ Could not load or draw emergency path.")
 
 # --- 6. Maintenance Planning ---
 elif action == "Plan road maintenance":
@@ -417,6 +507,16 @@ elif action == "Plan road maintenance":
 
         total = sum(r["MaintenanceCost"] for r in plan)
         st.success(f"Total Cost of Selected Roads: {total:.2f}M EGP")
+
+        
+        # 📌 Legend
+        st.markdown("""
+        #### 🗺️ Map Legend
+        - 🟥 **Red line** = Road selected for maintenance based on condition and budget
+        - ⚪ **Gray line** = Base road network
+        """)
+
+
 
         for r in plan:
             u, v = str(r["FromID"]), str(r["ToID"])
