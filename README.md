@@ -53,9 +53,9 @@ The Smart City Transportation System is a sophisticated platform that leverages 
 runtime-terror-transportation-system/
 ├── docs/                    # Documentation and reports
 │   ├── presentation/        # Presentation materials
-│   │   └── README.md
+│   │   
 │   └── report/             # Project reports
-│       └── README.md
+│       
 ├── dp_optimization/         # Dynamic programming implementations
 │   ├── dp_maintenance.py   # Maintenance scheduling
 │   ├── dp_scheduler.py     # Transport scheduling
@@ -107,16 +107,6 @@ The system uses the following data files for optimization:
 - NetworkX (graph processing)
 - Matplotlib (visualizations)
 - Git & GitHub (version control)
-
-## 🔧 Installation
-
-```bash
-git clone https://github.com/AmRo1011/runtime-terror-transportation-system.git
-cd runtime-terror-transportation-system
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
 
 ### Setup Instructions
 
