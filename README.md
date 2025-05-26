@@ -11,8 +11,8 @@ A comprehensive transportation optimization system for smart cities, implementin
 - [Features](#features)
 - [Project Structure](#project-structure)
 - [Data Sources](#data-sources)
-- [Installation](#installation)
 - [Usage](#usage)
+- [Demo](#Demo)
 - [Algorithms Implemented](#algorithms-implemented)
 - [Team](#team)
 
@@ -133,6 +133,9 @@ pip install -r requirements.txt
 ```bash
 streamlit run app.py
 ```
+### Demo 
+
+[Watch the Demo Video](https://youtu.be/sKIYGer4nU4)
 
 ### Key Features Usage
 
