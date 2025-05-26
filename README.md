@@ -1,7 +1,6 @@
 # Smart City Transportation System 🚦
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.24.0-orange.svg)](https://streamlit.io)
 [![NetworkX](https://img.shields.io/badge/NetworkX-2.8.4-blue.svg)](https://networkx.org)
 
@@ -98,18 +97,32 @@ The system uses the following data files for optimization:
 - `Traffic_Flow_Patterns.csv`: Traffic flow analysis data
 - `Transportation_Demand.csv`: Transportation demand patterns
 
-## Installation
 
-### Prerequisites
-- Python 3.8 or higher
-- pip (Python package manager)
-- Git
+---
+
+## 🛠️ Technologies
+
+- Python 3.10+
+- Streamlit (for UI)
+- NetworkX (graph processing)
+- Matplotlib (visualizations)
+- Git & GitHub (version control)
+
+## 🔧 Installation
+
+```bash
+git clone https://github.com/AmRo1011/runtime-terror-transportation-system.git
+cd runtime-terror-transportation-system
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
 
 ### Setup Instructions
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/runtime-terror-transportation-system.git
+git clone https://github.com/amro1011/runtime-terror-transportation-system.git
 cd runtime-terror-transportation-system
 ```
 
@@ -173,15 +186,18 @@ streamlit run app.py
 - Graph testing (`testing/test_graph.py`)
 
 ## Team
+👥 Team Runtime Terror
+- [Omnia Adel Saber](https://github.com/Omnia-adel1)
+- [Mariam Elrafei Mohamed](https://github.com/Mariam-abdelfttah)
+- [Shams Abd Elhalim Abo Ghannam](https://github.com/shams8795)
+- [Abdelrahman Amr Mohamed](https://github.com/AmRo1011)
 
-**Runtime Terror Team**
-- [Team Member 1: Omnia Adel Saber ]
-- [Team Member 2: Mariam Elrafei Mohamed]
-- [Team Member 3: Abdelrahman Amr Mohamed]
-- [Team Member 4: Shams Abd Elhalim Abo Ghannam]
+##🙏 Acknowledgments
+Special thanks to:
 
-## Acknowledgments
+Eng. Ahmed M. Yahia – for guidance and feedback
 
-- CSE112 - Design and Analysis of Algorithms Course
--AIU Faculty Advisors
-- Open Source Community
+AIU Faculty – for providing a supportive learning environment
+
+Open-source community
+
