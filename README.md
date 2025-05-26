@@ -185,7 +185,7 @@ streamlit run app.py
 - [Shams Abd Elhalim Abo Ghannam](https://github.com/shams8795)
 - [Abdelrahman Amr Mohamed](https://github.com/AmRo1011)
 
-##🙏 Acknowledgments
+## Acknowledgments
 Special thanks to:
 
 Eng. Ahmed M. Yahia – for guidance and feedback
